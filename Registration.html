@@ -56,7 +56,6 @@
 
     <div class="login-box">
       <h2>Registration</h2>
-      <!-- Attribute action & method dihapus agar ditangani penuh oleh JavaScript -->
       <form id="regisForm">
         <div class="user-box">
           <input type="email" name="email" required />
@@ -75,14 +74,13 @@
           <label>Nama Lengkap</label>
         </div>
 
-        <button type="submit" id="submitBtn" style="background:none; border:none; padding:0; cursor:pointer;">
-          <a style="display:inline-block;">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Registration
-          </a>
+        <!-- PERBAIKAN: Menggunakan button murni tanpa tag <a> -->
+        <button type="submit" id="submitBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span id="btnText">Registration</span>
         </button>
       </form>
     </div>
@@ -91,19 +89,19 @@
     <script>
       const scriptURL = 'https://script.google.com/macros/s/AKfycbxEFLSng9h9QbEaXgTdm97Xm6tn9by1YjEz9bBcIERyoA8N8x8g2lHsmnSaqyPODk6JeA/exec';
       const form = document.getElementById('regisForm');
-      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Mencegah form berpindah ke layar hitam Apps Script
+      form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Menghentikan redirect ke layar hitam
         
-        const btnText = submitBtn.querySelector('a');
         btnText.innerText = 'Processing...';
 
         fetch(scriptURL, { 
           method: 'POST', 
-          body: new FormData(form)
+          body: new FormData(form),
+          mode: 'no-cors' // Menghindari masalah blokir CORS di browser
         })
-        .then((response) => {
+        .then(() => {
           alert('Registrasi Berhasil! Mengalihkan ke halaman Login...');
           window.location.href = 'Login.html'; // Pindah otomatis ke Login.html
         })
