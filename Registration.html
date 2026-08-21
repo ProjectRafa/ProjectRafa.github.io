@@ -56,7 +56,7 @@
 
     <div class="login-box">
       <h2>Registration</h2>
-      <!-- ID ditambahkan pada form untuk ditangkap oleh JavaScript -->
+      <!-- Attribute action & method dihapus agar ditangani penuh oleh JavaScript -->
       <form id="regisForm">
         <div class="user-box">
           <input type="email" name="email" required />
@@ -87,30 +87,30 @@
       </form>
     </div>
 
-    <!-- Script JavaScript untuk Pengiriman Data dan Pengalihan Halaman -->
+    <!-- Script Pengiriman Async Data & Redirect -->
     <script>
       const scriptURL = 'https://script.google.com/macros/s/AKfycbxEFLSng9h9QbEaXgTdm97Xm6tn9by1YjEz9bBcIERyoA8N8x8g2lHsmnSaqyPODk6JeA/exec';
       const form = document.getElementById('regisForm');
       const submitBtn = document.getElementById('submitBtn');
 
       form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Mencegah form berpindah halaman secara standar
+        e.preventDefault(); // Mencegah form berpindah ke layar hitam Apps Script
         
-        // Ubah teks tombol sementara saat proses pengiriman
-        submitBtn.querySelector('a').innerText = 'Processing...';
+        const btnText = submitBtn.querySelector('a');
+        btnText.innerText = 'Processing...';
 
         fetch(scriptURL, { 
           method: 'POST', 
           body: new FormData(form)
         })
         .then((response) => {
-          alert('Registrasi Berhasil! Silakan Login.');
-          window.location.href = 'Login.html'; // Pindah langsung ke halaman Login
+          alert('Registrasi Berhasil! Mengalihkan ke halaman Login...');
+          window.location.href = 'Login.html'; // Pindah otomatis ke Login.html
         })
         .catch((error) => {
           console.error('Error!', error.message);
-          alert('Terjadi kesalahan saat registrasi. Coba lagi.');
-          submitBtn.querySelector('a').innerText = 'Registration';
+          alert('Terjadi kesalahan, silakan coba lagi.');
+          btnText.innerText = 'Registration';
         });
       });
     </script>
